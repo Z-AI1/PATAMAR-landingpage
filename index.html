@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>PATAMAR — FOGO · Lote Zero</title>
+
+  <meta
+    name="description"
+    content="Entre para a lista do Lote Zero de PATAMAR FOGO e concorra aos primeiros frascos da história."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --black: #0d0b0a;
+      --dark: #15110f;
+      --bone: #ede8df;
+      --stone: #b9afa3;
+      --ember: #a6521f;
+      --gold: #c29a6b;
+      --line: rgba(237, 232, 223, .15);
+      --pad: clamp(22px, 6vw, 100px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--bone);
+      font-family: "Jost", sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =====================================================
+       HERO / CORTINA
+    ===================================================== */
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 1s ease-in-out;
+      z-index: 20;
+      background: var(--black);
+    }
+
+    .hero.hero-hidden {
+      transform: translateY(-100%);
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(13, 11, 10, .20) 0%,
+          rgba(13, 11, 10, .25) 40%,
+          rgba(13, 11, 10, .88) 100%
+        );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 1100px);
+      padding: 15vh var(--pad) 7vh;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(58px, 10vw, 140px);
+      font-weight: 500;
+      line-height: .84;
+      letter-spacing: -.04em;
+      margin-bottom: 28px;
+    }
+
+    .hero-subtitle {
+      max-width: 650px;
+      color: var(--stone);
+      font-size: clamp(16px, 2vw, 21px);
+      line-height: 1.55;
+      margin-bottom: 30px;
+    }
+
+    .hero-bottom {
+      position: relative;
+      z-index: 3;
+      padding: 0 var(--pad) 5vh;
+    }
+
+    /* =====================================================
+       FORMULÁRIOS
+    ===================================================== */
+
+    .lead-form {
+      width: min(100%, 620px);
+    }
+
+    .lead-fields {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .lead-input {
+      width: 100%;
+      min-height: 58px;
+      padding: 0 20px;
+      border: 1px solid rgba(237, 232, 223, .28);
+      border-radius: 0;
+      outline: none;
+      background: rgba(13, 11, 10, .62);
+      backdrop-filter: blur(10px);
+      color: var(--bone);
+      font-family: "Jost", sans-serif;
+      font-size: 15px;
+      transition:
+        border-color .25s ease,
+        background .25s ease;
+    }
+
+    .lead-input::placeholder {
+      color: rgba(237, 232, 223, .58);
+    }
+
+    .lead-input:focus {
+      border-color: var(--gold);
+      background: rgba(13, 11, 10, .82);
+    }
+
+    .lead-button {
+      min-height: 58px;
+      padding: 0 26px;
+      border: 1px solid var(--bone);
+      background: var(--bone);
+      color: var(--black);
+      cursor: pointer;
+      font-family: "Jost", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition:
+        background .25s ease,
+        color .25s ease,
+        transform .25s ease;
+    }
+
+    .lead-button:hover {
+      background: transparent;
+      color: var(--bone);
+      transform: translateY(-2px);
+    }
+
+    .lead-note {
+      margin-top: 12px;
+      color: rgba(237, 232, 223, .56);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .lead-error {
+      display: none;
+      margin-top: 10px;
+      color: #d58b6b;
+      font-size: 12px;
+    }
+
+    .lead-success {
+      display: none;
+      width: min(100%, 620px);
+      border: 1px solid rgba(194, 154, 107, .45);
+      background: rgba(194, 154, 107, .07);
+      padding: 25px;
+    }
+
+    .lead-success.show {
+      display: block;
+      animation: successIn .5s ease forwards;
+    }
+
+    @keyframes successIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-label {
+      margin-bottom: 7px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .success-title {
+      margin-bottom: 12px;
+      color: var(--bone);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .success-text {
+      color: var(--stone);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .success-text strong {
+      color: var(--bone);
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       HISTÓRIA
+    ===================================================== */
+
+    .section {
+      padding: 12vh var(--pad);
+    }
+
+    .section-inner {
+      width: min(100%, 1100px);
+      margin: 0 auto;
+    }
+
+    .section-kicker {
+      margin-bottom: 25px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      max-width: 900px;
+      margin-bottom: 35px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(45px, 7vw, 92px);
+      font-weight: 500;
+      line-height: .95;
+      letter-spacing: -.035em;
+    }
+
+    .section-copy {
+      max-width: 720px;
+      color: var(--stone);
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.8;
+    }
+
+    .manifesto {
+      padding-top: 20vh;
+      padding-bottom: 20vh;
+      background: var(--dark);
+    }
+
+    .manifesto-text {
+      max-width: 900px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(45px, 7vw, 90px);
+      line-height: .95;
+      font-weight: 400;
+      letter-spacing: -.035em;
+    }
+
+    /* =====================================================
+       IMAGEM / DETALHE
+    ===================================================== */
+
+    .image-section {
+      padding: 0;
+      background: var(--black);
+    }
+
+    .image-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .image-wrap img {
+      min-height: 70vh;
+      object-fit: cover;
+    }
+
+    .image-caption {
+      position: absolute;
+      left: var(--pad);
+      bottom: 35px;
+      color: var(--bone);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 15px rgba(0,0,0,.5);
+    }
+
+    /* =====================================================
+       OLFATIVO
+    ===================================================== */
+
+    .olfactive {
+      padding: 14vh var(--pad);
+      background: var(--dark);
+    }
+
+    .olfactive-intro {
+      max-width: 800px;
+      margin-bottom: 80px;
+    }
+
+    .olfactive-position {
+      color: var(--stone);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+    }
+
+    .note {
+      padding: 35px 25px 35px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .note:not(:first-child) {
+      padding-left: 25px;
+    }
+
+    .note:last-child {
+      border-right: 0;
+    }
+
+    .note-number {
+      margin-bottom: 25px;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: .2em;
+    }
+
+    .note-title {
+      margin-bottom: 12px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .note-name {
+      margin-bottom: 20px;
+      color: var(--stone);
+      font-size: 13px;
+    }
+
+    .note-description {
+      color: var(--bone);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       CAPTURA INTERMEDIÁRIA
+    ===================================================== */
+
+    .mid-capture {
+      padding: 13vh var(--pad);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(166, 82, 31, .10),
+          transparent 55%
+        ),
+        var(--black);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mid-capture-inner {
+      width: min(100%, 850px);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .mid-capture .section-title {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .mid-capture .section-copy {
+      margin: 0 auto 35px;
+    }
+
+    .mid-capture .lead-form {
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    /* =====================================================
+       USO
+    ===================================================== */
+
+    .usage {
+      padding: 14vh var(--pad);
+    }
+
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      margin-top: 70px;
+      border-top: 1px solid var(--line);
+    }
+
+    .usage-item {
+      padding: 35px 30px 35px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .usage-item:not(:first-child) {
+      padding-left: 30px;
+    }
+
+    .usage-item:last-child {
+      border-right: 0;
+    }
+
+    .usage-number {
+      margin-bottom: 20px;
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 34px;
+    }
+
+    .usage-title {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .usage-copy {
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =====================================================
+       OFERTA / LISTA
+    ===================================================== */
+
+    .offer {
+      padding: 15vh var(--pad);
+      background: var(--dark);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .offer-image {
+      overflow: hidden;
+    }
+
+    .offer-image img {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    .product-label {
+      margin-bottom: 18px;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .product-name {
+      margin-bottom: 25px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(48px, 6vw, 76px);
+      font-weight: 500;
+      line-height: .9;
+      letter-spacing: -.035em;
+    }
+
+    .offer-copy {
+      max-width: 500px;
+      margin-bottom: 35px;
+      color: var(--stone);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .specs {
+      margin-bottom: 45px;
+      border-top: 1px solid var(--line);
+    }
+
+    .spec {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .spec span:first-child {
+      color: var(--stone);
+    }
+
+    .spec span:last-child {
+      color: var(--bone);
+      text-align: right;
+    }
+
+    .urgency {
+      margin-bottom: 25px;
+      padding-left: 18px;
+      border-left: 1px solid var(--gold);
+      color: var(--bone);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 25px;
+      line-height: 1.25;
+    }
+
+    /* =====================================================
+       FECHAMENTO
+    ===================================================== */
+
+    .closing {
+      padding: 18vh var(--pad);
+      text-align: center;
+      background: var(--black);
+    }
+
+    .closing .section-title {
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .closing-copy {
+      max-width: 620px;
+      margin: 0 auto 35px;
+      color: var(--stone);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .closing .lead-form {
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    footer {
+      padding: 30px var(--pad);
+      border-top: 1px solid var(--line);
+      color: rgba(237, 232, 223, .45);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* =====================================================
+       RESPONSIVO
+    ===================================================== */
+
+    @media (max-width: 800px) {
+
+      .lead-fields {
+        flex-direction: column;
+      }
+
+      .lead-button {
+        width: 100%;
+      }
+
+      .notes,
+      .usage-grid,
+      .offer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .note,
+      .note:not(:first-child),
+      .usage-item,
+      .usage-item:not(:first-child) {
+        padding: 30px 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .note:last-child,
+      .usage-item:last-child {
+        border-bottom: 0;
+      }
+
+      .offer-grid {
+        gap: 45px;
+      }
+
+      .hero-content {
+        padding-top: 20vh;
+      }
+
+      .hero h1 {
+        font-size: clamp(55px, 17vw, 100px);
+      }
+
+      .image-wrap img {
+        min-height: 60vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================================
+       HERO
+  ===================================================== -->
+
+  <section class="hero" id="inicio">
+
+    <div class="hero-image">
+      <img
+        src="./vsl-fogo-abertura.jpg"
+        alt="PATAMAR FOGO — Lote Zero"
+      >
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+      <span class="eyebrow">
+        Pré-lançamento · Lote Zero
+      </span>
+
+      <h1>
+        Antes do fogo<br>
+        existe o primeiro passo.
+      </h1>
+
+      <p class="hero-subtitle">
+        Deixe seu WhatsApp e concorra a um dos 3 frascos exclusivos
+        do Lote Zero de PATAMAR FOGO. O resultado será revelado no dia
+        do lançamento.
+      </p>
+
+      <div class="hero-bottom">
+
+        <form class="lead-form" data-lead-form>
+
+          <div class="lead-fields">
+
+            <input
+              class="lead-input"
+              type="tel"
+              name="whatsapp"
+              placeholder="Seu WhatsApp com DDD"
+              autocomplete="tel"
+              inputmode="numeric"
+              required
+            >
+
+            <button
+              class="lead-button"
+              type="submit"
+            >
+              Concorrer ao Lote Zero
+            </button>
+
+          </div>
+
+          <p class="lead-note">
+            Seu número será utilizado para registrar sua participação
+            e enviar as informações do sorteio e do lançamento.
+          </p>
+
+          <p class="lead-error">
+            Digite um número de WhatsApp válido com DDD.
+          </p>
+
+        </form>
+
+        <div class="lead-success">
+
+          <div class="success-label">
+            Participação registrada
+          </div>
+
+          <div class="success-title">
+            Você está na lista.
+          </div>
+
+          <p class="success-text">
+            Seu WhatsApp foi registrado para participar do
+            <strong>Lote Zero de PATAMAR FOGO.</strong>
+            <br><br>
+
+            Em breve, você receberá o convite para entrar no
+            <strong>Grupo do Sorteio PATAMAR FOGO</strong>, onde
+            serão divulgados o resultado e as informações do lançamento.
+            <br><br>
+
+            <strong>Importante:</strong> para ter direito ao frasco,
+            caso seja sorteado, será necessário estar no grupo no momento
+            da divulgação do resultado.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HISTÓRIA
+  ===================================================== -->
+
+  <section class="section" id="historia">
+
+    <div class="section-inner">
+
+      <div class="section-kicker">
+        O começo
+      </div>
+
+      <h2 class="section-title">
+        O primeiro fogo
+        não deveria ser comum.
+      </h2>
+
+      <p class="section-copy">
+        PATAMAR FOGO nasce para ocupar um lugar específico:
+        a noite, o silêncio e aquela presença que não precisa
+        pedir atenção.
+        <br><br>
+
+        Antes de existir uma produção em escala, existe uma primeira
+        edição. Um primeiro lote. Um primeiro grupo de pessoas que
+        experimentará aquilo que ainda está começando.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MANIFESTO
+  ===================================================== -->
+
+  <section class="manifesto">
+
+    <div class="section-inner">
+
+      <div class="section-kicker">
+        Manifesto
+      </div>
+
+      <p class="manifesto-text">
+        Nem todo calor
+        precisa anunciar-se.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       IMAGEM
+  ===================================================== -->
+
+  <section class="image-section">
+
+    <div class="image-wrap">
+
+      <img
+        src="./vsl-fogo-detalhe.jpg"
+        alt="Detalhe do PATAMAR FOGO"
+      >
+
+      <div class="image-caption">
+        Uma presença que permanece.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       OLFATIVO
+  ===================================================== -->
+
+  <section class="olfactive" id="olfativo">
+
+    <div class="section-inner">
+
+      <div class="olfactive-intro">
+
+        <div class="section-kicker">
+          Arquitetura olfativa
+        </div>
+
+        <h2 class="section-title">
+          Construído para a noite.
+        </h2>
+
+        <p class="olfactive-position">
+          Oriental especiado. Uma construção quente, escura e
+          envolvente, pensada para quem prefere presença sem excesso.
+          <br><br>
+
+          Eau de Parfum · Oriental Especiado Masculino.
+        </p>
+
+      </div>
+
+      <div class="notes">
+
+        <div class="note">
+
+          <div class="note-number">
+            01 · SAÍDA
+          </div>
+
+          <h3 class="note-title">
+            Licor e faísca
+          </h3>
+
+          <div class="note-name">
+            Lavanda · Ameixa Mirabelle · Pimenta Rosa
+          </div>
+
+          <p class="note-description">
+            Uma abertura aromática, frutada e levemente picante,
+            responsável pelo primeiro impacto da composição.
+          </p>
+
+        </div>
+
+
+        <div class="note">
+
+          <div class="note-number">
+            02 · CORAÇÃO
+          </div>
+
+          <h3 class="note-title">
+            Cacau escuro
+          </h3>
+
+          <div class="note-name">
+            Cacau · Noz-moscada · Davana
+          </div>
+
+          <p class="note-description">
+            O centro da composição ganha profundidade com acordes
+            achocolatados, especiados e densos.
+          </p>
+
+        </div>
+
+
+        <div class="note">
+
+          <div class="note-number">
+            03 · FUNDO
+          </div>
+
+          <h3 class="note-title">
+            Madeira quente
+          </h3>
+
+          <div class="note-name">
+            Baunilha de Bourbon · Âmbar · Vetiver
+          </div>
+
+          <p class="note-description">
+            A base prolonga o rastro com calor, madeira e uma
+            doçura escura que permanece próxima à pele.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CAPTURA INTERMEDIÁRIA
+  ===================================================== -->
+
+  <section class="mid-capture">
+
+    <div class="mid-capture-inner">
+
+      <div class="section-kicker">
+        Lote Zero
+      </div>
+
+      <h2 class="section-title">
+        Quer experimentar
+        essa arquitetura na própria pele?
+      </h2>
+
+      <p class="section-copy">
+        Insira seu WhatsApp abaixo e concorra automaticamente
+        a um dos 3 primeiros frascos da história de FOGO.
+        <br><br>
+
+        Depois de registrar sua participação, você receberá
+        as informações para entrar no grupo do sorteio.
+      </p>
+
+
+      <form class="lead-form" data-lead-form>
+
+        <div class="lead-fields">
+
+          <input
+            class="lead-input"
+            type="tel"
+            name="whatsapp"
+            placeholder="Seu WhatsApp com DDD"
+            autocomplete="tel"
+            inputmode="numeric"
+            required
+          >
+
+          <button
+            class="lead-button"
+            type="submit"
+          >
+            Entrar para a Lista
+          </button>
+
+        </div>
+
+        <p class="lead-note">
+          Não precisa sair desta página. Depois de participar,
+          continue conhecendo a história do FOGO.
+        </p>
+
+        <p class="lead-error">
+          Digite um número de WhatsApp válido com DDD.
+        </p>
+
+      </form>
+
+
+      <div class="lead-success">
+
+        <div class="success-label">
+          Participação registrada
+        </div>
+
+        <div class="success-title">
+          Seu lugar está reservado na lista.
+        </div>
+
+        <p class="success-text">
+          Seu WhatsApp foi registrado para o sorteio do
+          <strong>Lote Zero de PATAMAR FOGO.</strong>
+          <br><br>
+
+          Em breve, você receberá o convite para o
+          <strong>Grupo do Sorteio</strong>, onde serão divulgados
+          o resultado e as condições do lançamento.
+          <br><br>
+
+          <strong>Continue conhecendo o FOGO abaixo.</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       DETALHE / IMAGEM
+  ===================================================== -->
+
+  <section class="image-section">
+
+    <div class="image-wrap">
+
+      <img
+        src="./vsl-fogo-textura.jpg"
+        alt="Textura e detalhes do PATAMAR FOGO"
+      >
+
+      <div class="image-caption">
+        Acordes achocolatados · projeção densa · presença prolongada
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       USO
+  ===================================================== -->
+
+  <section class="usage">
+
+    <div class="section-inner">
+
+      <div class="section-kicker">
+        Três gestos
+      </div>
+
+      <h2 class="section-title">
+        O fogo também está
+        na forma de usar.
+      </h2>
+
+      <div class="usage-grid">
+
+        <div class="usage-item">
+
+          <div class="usage-number">
+            01
+          </div>
+
+          <h3 class="usage-title">
+            Distância
+          </h3>
+
+          <p class="usage-copy">
+            Borrife a aproximadamente 15 cm da pele.
+            Não esfregue. O atrito rompe parte da saída
+            de lavanda e altera a evolução inicial.
+          </p>
+
+        </div>
+
+
+        <div class="usage-item">
+
+          <div class="usage-number">
+            02
+          </div>
+
+          <h3 class="usage-title">
+            Pontos
+          </h3>
+
+          <p class="usage-copy">
+            Aplique na base do pescoço e nos punhos,
+            regiões onde o calor natural da pele ajuda
+            a composição a evoluir.
+          </p>
+
+        </div>
+
+
+        <div class="usage-item">
+
+          <div class="usage-number">
+            03
+          </div>
+
+          <h3 class="usage-title">
+            Medida
+          </h3>
+
+          <p class="usage-copy">
+            Duas borrifadas são suficientes para criar
+            presença sem transformar a fragrância em
+            excesso.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       LISTA / EDIÇÃO FUNDADOR
+  ===================================================== -->
+
+  <section class="offer" id="lista">
+
+    <div class="section-inner">
+
+      <div class="offer-grid">
+
+        <div class="offer-image">
+
+          <img
+            src="./vsl-fogo-comprar.jpg"
+            alt="PATAMAR FOGO — Edição Fundador"
+          >
+
+        </div>
+
+
+        <div class="offer-content">
+
+          <div class="product-label">
+            Primeiros exemplares
+          </div>
+
+          <h2 class="product-name">
+            A Edição Fundador
+            <br>
+            (Lote #000)
+          </h2>
+
+          <p class="offer-copy">
+            Antes dos lotes oficiais existe uma primeira história.
+            O Lote Zero representa os primeiros frascos de PATAMAR FOGO,
+            destinados às pessoas que estiverem presentes desde o começo.
+          </p>
+
+
+          <div class="specs">
+
+            <div class="spec">
+              <span>Concentração</span>
+              <span>Eau de Parfum · 18%</span>
+            </div>
+
+            <div class="spec">
+              <span>Volume</span>
+              <span>50 ml · 1.7 FL. OZ.</span>
+            </div>
+
+            <div class="spec">
+              <span>Fixação</span>
+              <span>10 a 12 horas*</span>
+            </div>
+
+            <div class="spec">
+              <span>Ocasião</span>
+              <span>Noite · Dias frios</span>
+            </div>
+
+            <div class="spec">
+              <span>Edição</span>
+              <span>Lote Zero · #000</span>
+            </div>
+
+          </div>
+
+
+          <div class="urgency">
+            Sua última oportunidade de entrar para a lista fechada
+            e concorrer aos primeiros exemplares antes que as
+            vendas oficiais comecem.
+          </div>
+
+
+          <form class="lead-form" data-lead-form>
+
+            <div class="lead-fields">
+
+              <input
+                class="lead-input"
+                type="tel"
+                name="whatsapp"
+                placeholder="Seu WhatsApp com DDD"
+                autocomplete="tel"
+                inputmode="numeric"
+                required
+              >
+
+              <button
+                class="lead-button"
+                type="submit"
+              >
+                Concorrer ao Lote Zero
+              </button>
+
+            </div>
+
+            <p class="lead-note">
+              Após o cadastro, você continuará nesta página.
+              O convite para o grupo será enviado posteriormente.
+            </p>
+
+            <p class="lead-error">
+              Digite um número de WhatsApp válido com DDD.
+            </p>
+
+          </form>
+
+
+          <div class="lead-success">
+
+            <div class="success-label">
+              Tudo certo
+            </div>
+
+            <div class="success-title">
+              Você entrou para a lista.
+            </div>
+
+            <p class="success-text">
+              Seu WhatsApp foi registrado para participar do
+              <strong>Lote Zero.</strong>
+              <br><br>
+
+              Em breve, você receberá o convite para o
+              <strong>Grupo do Sorteio PATAMAR FOGO.</strong>
+              <br><br>
+
+              Caso seja sorteado, será necessário estar no grupo
+              no momento da divulgação do resultado para ter direito
+              ao recebimento do frasco.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FECHAMENTO
+  ===================================================== -->
+
+  <section class="closing">
+
+    <div class="section-inner">
+
+      <div class="section-kicker">
+        Último passo
+      </div>
+
+      <h2 class="section-title">
+        O fogo está
+        começando.
+      </h2>
+
+      <p class="closing-copy">
+        Entre para a lista do Lote Zero e acompanhe de perto
+        o nascimento de PATAMAR FOGO.
+        <br><br>
+
+        Os primeiros frascos não estarão disponíveis para sempre.
+        Mas a história começa agora.
+      </p>
+
+
+      <form class="lead-form" data-lead-form>
+
+        <div class="lead-fields">
+
+          <input
+            class="lead-input"
+            type="tel"
+            name="whatsapp"
+            placeholder="Seu WhatsApp com DDD"
+            autocomplete="tel"
+            inputmode="numeric"
+            required
+          >
+
+          <button
+            class="lead-button"
+            type="submit"
+          >
+            Entrar para a Lista
+          </button>
+
+        </div>
+
+        <p class="lead-note">
+          Você permanecerá nesta página após o cadastro.
+        </p>
+
+        <p class="lead-error">
+          Digite um número de WhatsApp válido com DDD.
+        </p>
+
+      </form>
+
+
+      <div class="lead-success">
+
+        <div class="success-label">
+          Lote Zero
+        </div>
+
+        <div class="success-title">
+          Participação confirmada.
+        </div>
+
+        <p class="success-text">
+          Seu WhatsApp foi registrado.
+          <br><br>
+
+          Em breve, você receberá o convite para o
+          <strong>Grupo do Sorteio PATAMAR FOGO</strong>,
+          onde serão divulgados o resultado e as informações
+          do lançamento.
+          <br><br>
+
+          Agora você pode continuar conhecendo o FOGO.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+
+  <footer>
+    © 2026 Patamar Perfumaria · Feito à mão em lotes pequenos
+  </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script>
+
+    /*
+      ======================================================
+      CONFIGURAÇÃO
+
+      Por enquanto o formulário NÃO envia automaticamente
+      para um serviço externo.
+
+      Na próxima etapa podemos conectar este ponto a:
+      - Google Sheets
+      - Google Forms
+      - Formspree
+      - Make
+      - Webhook
+      - outro serviço gratuito
+
+      O ponto de integração está indicado abaixo.
+      ======================================================
+    */
+
+
+    // ------------------------------------------------------
+    // NORMALIZAÇÃO DO WHATSAPP
+    // ------------------------------------------------------
+
+    function normalizeWhatsapp(value) {
+
+      return value.replace(/\D/g, "");
+
+    }
+
+
+    // ------------------------------------------------------
+    // VALIDAÇÃO
+    // ------------------------------------------------------
+
+    function isValidWhatsapp(value) {
+
+      const number = normalizeWhatsapp(value);
+
+      /*
+        Brasil:
+        DDD + número.
+        Celular normalmente possui 11 dígitos.
+      */
+
+      return number.length === 11;
+
+    }
+
+
+    // ------------------------------------------------------
+    // MÁSCARA SIMPLES
+    // ------------------------------------------------------
+
+    document.querySelectorAll('input[type="tel"]').forEach(function(input) {
+
+      input.addEventListener("input", function() {
+
+        let value = normalizeWhatsapp(this.value);
+
+        if (value.length > 11) {
+          value = value.substring(0, 11);
+        }
+
+        if (value.length <= 2) {
+
+          this.value = value;
+
+        } else if (value.length <= 7) {
+
+          this.value =
+            "(" +
+            value.substring(0, 2) +
+            ") " +
+            value.substring(2);
+
+        } else {
+
+          this.value =
+            "(" +
+            value.substring(0, 2) +
+            ") " +
+            value.substring(2, 7) +
+            "-" +
+            value.substring(7);
+
+        }
+
+      });
+
+    });
+
+
+    // ------------------------------------------------------
+    // FORMULÁRIOS
+    // ------------------------------------------------------
+
+    document.querySelectorAll("[data-lead-form]").forEach(function(form) {
+
+      form.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const input = form.querySelector('input[name="whatsapp"]');
+        const button = form.querySelector(".lead-button");
+        const error = form.querySelector(".lead-error");
+
+
+        const whatsapp = normalizeWhatsapp(input.value);
+
+
+        // Esconde erro anterior
+        error.style.display = "none";
+
+
+        // Validação
+        if (!isValidWhatsapp(whatsapp)) {
+
+          error.style.display = "block";
+
+          input.focus();
+
+          return;
+
+        }
+
+
+        /*
+          ==================================================
+          AQUI SERÁ FEITA A INTEGRAÇÃO COM O FORMULÁRIO.
+
+          Exemplo futuro:
+
+          await fetch("SEU_WEBHOOK_AQUI", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              whatsapp: whatsapp,
+              origem: "Landing Page PATAMAR FOGO",
+              campanha: "Lote Zero"
+            })
+          });
+
+          Por enquanto deixamos essa parte local.
+          ==================================================
+        */
+
+
+        // Evita múltiplos cliques
+        button.disabled = true;
+
+        button.textContent = "Registrando...";
+
+
+        // Pequena pausa para dar sensação de confirmação
+        await new Promise(function(resolve) {
+
+          setTimeout(resolve, 500);
+
+        });
+
+
+        // Esconde formulário
+        form.style.display = "none";
+
+
+        // Procura a mensagem de sucesso pertencente à seção
+        const success = form.parentElement.querySelector(".lead-success");
+
+
+        if (success) {
+
+          success.classList.add("show");
+
+          // Leva suavemente o usuário para a confirmação
+          setTimeout(function() {
+
+            success.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+
+          }, 100);
+
+        }
+
+
+      });
+
+    });
+
+
+    // ------------------------------------------------------
+    // ANIMAÇÃO DA CORTINA
+    // ------------------------------------------------------
+
+    const hero = document.querySelector(".hero");
+    const heroForm = hero.querySelector("[data-lead-form]");
+
+
+    /*
+      A primeira participação não tira o visitante da página.
+
+      O hero continua visível e o usuário segue navegando.
+
+      Caso você queira posteriormente fazer o hero subir depois
+      de uma ação específica, a classe abaixo continua disponível.
+    */
+
+    function revealPage() {
+
+      hero.classList.add("hero-hidden");
+
+      setTimeout(function() {
+
+        hero.style.display = "none";
+
+        document.querySelector("#historia").scrollIntoView({
+          behavior: "smooth"
+        });
+
+      }, 1000);
+
+    }
+
+
+    /*
+      NÃO executamos revealPage() automaticamente.
+
+      O objetivo agora é:
+
+      WhatsApp
+      ↓
+      Participação confirmada
+      ↓
+      Continua na landing page
+      ↓
+      Conhece o produto
+      ↓
+      Recebe convite do grupo posteriormente
+    */
+
+
+  </script>
+
+</body>
+</html>
