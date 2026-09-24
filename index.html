@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script>document.documentElement.classList.add("js");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -698,10 +699,312 @@
         min-height: 60vh;
       }
     }
+
+
+    /* =====================================================
+       DIREÇÃO DE ARTE / ANIMAÇÕES VSL
+    ===================================================== */
+
+    html.js body {
+      overflow-x: hidden;
+    }
+
+    :root {
+      --ease-luxury: cubic-bezier(.22, .61, .36, 1);
+      --ease-slow: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    ::selection {
+      background: rgba(194, 154, 107, .22);
+      color: var(--bone);
+    }
+
+    /* Entrada suave do conteúdo principal */
+    html.js .hero .eyebrow,
+    html.js .hero h1,
+    html.js .hero-subtitle,
+    html.js .hero-bottom {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    html.js .hero.is-ready .eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .8s ease, transform 1s var(--ease-slow);
+    }
+
+    html.js .hero.is-ready h1 {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .95s .12s ease, transform 1.15s .12s var(--ease-slow);
+    }
+
+    html.js .hero.is-ready .hero-subtitle {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .9s .24s ease, transform 1s .24s var(--ease-slow);
+    }
+
+    html.js .hero.is-ready .hero-bottom {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .9s .38s ease, transform 1s .38s var(--ease-slow);
+    }
+
+    /* Hero: movimento contínuo e parallax muito sutil */
+    .hero-image {
+      will-change: transform;
+      transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.065);
+    }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 55% 68%, rgba(194,154,107,.12), transparent 28%),
+        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.10));
+      opacity: .7;
+    }
+
+    .hero-image img {
+      object-position: center center;
+    }
+
+    /* Barra de progresso de leitura: mínima e discreta */
+    .vsl-progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 2px;
+      background: rgba(237, 232, 223, .08);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .vsl-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--gold);
+      transform-origin: left center;
+      box-shadow: 0 0 18px rgba(194,154,107,.28);
+    }
+
+    /* Revelação dos blocos de texto durante o scroll */
+    html.js .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity .8s ease, transform 1.05s var(--ease-slow);
+    }
+
+    html.js .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Imagens: cortina + zoom-out + parallax */
+    .scene-media {
+      position: relative;
+      isolation: isolate;
+      will-change: transform;
+    }
+
+    .scene-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: var(--black);
+      transform: scaleX(1);
+      transform-origin: left center;
+      transition: transform 1.25s 0.08s var(--ease-slow);
+      pointer-events: none;
+    }
+
+    .scene-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at 52% 62%, rgba(166,82,31,.14), transparent 42%);
+      opacity: 0;
+      transition: opacity 1.25s .2s ease;
+      mix-blend-mode: screen;
+    }
+
+    html.js .scene-media img,
+    html.js .offer-image img {
+      transform: scale(1.075) translate3d(0, 0, 0);
+      transition: transform 1.8s var(--ease-slow), filter 1.2s ease;
+      will-change: transform;
+      filter: saturate(.92) contrast(1.02);
+    }
+
+    .scene-media.is-visible::after {
+      transform: scaleX(0);
+    }
+
+    .scene-media.is-visible::before {
+      opacity: 1;
+    }
+
+    .scene-media.is-visible img,
+    .offer-image.is-visible img {
+      transform: scale(1.015) translate3d(0, 0, 0);
+      filter: saturate(1) contrast(1.04);
+    }
+
+    /* A legenda participa do movimento, sem competir com a fotografia */
+    html.js .image-caption {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .75s .48s ease, transform .9s .48s var(--ease-slow);
+    }
+
+    .scene-media.is-visible .image-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Pequeno tratamento de produto na oferta */
+    .offer-image {
+      transition: transform .7s var(--ease-slow);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .offer-image:hover {
+        transform: translateY(-4px);
+      }
+
+      .offer-image:hover img {
+        transform: scale(1.03) !important;
+      }
+
+      .lead-button:hover {
+        letter-spacing: .14em;
+      }
+    }
+
+    /* Todos os espaços visuais seguem a mesma matriz 16:9 */
+    .image-wrap img,
+    .offer-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      min-height: 0;
+    }
+
+    /* Focos de enquadramento por cena */
+    [data-scene="detail"] .image-wrap img {
+      object-position: 50% 50%;
+    }
+
+    [data-scene="texture"] .image-wrap img {
+      object-position: 50% 50%;
+    }
+
+    .offer-image img {
+      object-position: 50% 50%;
+    }
+
+    /* Micro separadores ajudam o ritmo cinematográfico */
+    .section,
+    .manifesto,
+    .olfactive,
+    .usage,
+    .offer,
+    .closing {
+      position: relative;
+    }
+
+    .section::after,
+    .olfactive::after,
+    .usage::after,
+    .offer::after,
+    .closing::after {
+      content: "";
+      position: absolute;
+      left: var(--pad);
+      right: var(--pad);
+      bottom: 0;
+      height: 1px;
+      background: rgba(237, 232, 223, .06);
+      pointer-events: none;
+    }
+
+    /* Notas e cards entram em sequência */
+    html.js .notes .note,
+    html.js .usage-grid .usage-item {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .75s ease, transform .95s var(--ease-slow);
+    }
+
+    html.js .notes.is-visible .note,
+    html.js .usage-grid.is-visible .usage-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    html.js .notes.is-visible .note:nth-child(2),
+    html.js .usage-grid.is-visible .usage-item:nth-child(2) {
+      transition-delay: .12s;
+    }
+
+    html.js .notes.is-visible .note:nth-child(3),
+    html.js .usage-grid.is-visible .usage-item:nth-child(3) {
+      transition-delay: .24s;
+    }
+
+    /* Enquadramento responsivo: a foto continua 16:9, mas o sujeito não encosta nas bordas */
+    @media (max-width: 800px) {
+      .hero-image {
+        transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.10);
+      }
+
+      .hero-image img {
+        object-position: 52% center;
+      }
+
+      [data-scene="detail"] .image-wrap img,
+      [data-scene="texture"] .image-wrap img,
+      .offer-image img {
+        object-position: 50% 50%;
+      }
+
+      .section::after,
+      .olfactive::after,
+      .usage::after,
+      .offer::after,
+      .closing::after {
+        left: 22px;
+        right: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
   </style>
 </head>
 
 <body>
+
+  <div class="vsl-progress" aria-hidden="true"><div class="vsl-progress-bar"></div></div>
 
   <!-- =====================================================
        HERO
@@ -709,9 +1012,9 @@
 
   <section class="hero" id="inicio">
 
-    <div class="hero-image">
+    <div class="hero-image" data-parallax="0.20">
       <img
-        src="./vsl-fogo-abertura.jpg"
+        src="./fogo-hero.webp"
         alt="PATAMAR FOGO — Lote Zero"
       >
     </div>
@@ -864,12 +1167,12 @@
        IMAGEM
   ===================================================== -->
 
-  <section class="image-section">
+  <section class="image-section scene-section" data-scene="detail">
 
-    <div class="image-wrap">
+    <div class="image-wrap scene-media" data-parallax="0.14">
 
       <img
-        src="./vsl-fogo-detalhe.jpg"
+        src="./fogo-detalhe.webp"
         alt="Detalhe do PATAMAR FOGO"
       >
 
@@ -1080,12 +1383,12 @@
        DETALHE / IMAGEM
   ===================================================== -->
 
-  <section class="image-section">
+  <section class="image-section scene-section" data-scene="texture">
 
-    <div class="image-wrap">
+    <div class="image-wrap scene-media" data-parallax="0.18">
 
       <img
-        src="./vsl-fogo-textura.jpg"
+        src="./fogo-textura.webp"
         alt="Textura e detalhes do PATAMAR FOGO"
       >
 
@@ -1190,10 +1493,10 @@
 
       <div class="offer-grid">
 
-        <div class="offer-image">
+        <div class="offer-image scene-media" data-parallax="0.08">
 
           <img
-            src="./vsl-fogo-comprar.jpg"
+            src="./fogo-comprar.webp"
             alt="PATAMAR FOGO — Edição Fundador"
           >
 
@@ -1432,6 +1735,105 @@
 
   <script>
 
+
+      // ------------------------------------------------------
+      // DIREÇÃO DE ARTE / SCROLL REVEAL
+      // ------------------------------------------------------
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const heroScene = document.querySelector(".hero");
+      const progressBar = document.querySelector(".vsl-progress-bar");
+      const parallaxNodes = Array.from(document.querySelectorAll("[data-parallax]"));
+
+      function prepareRevealElements() {
+        const selectors = [
+          ".section-kicker",
+          ".section-title",
+          ".section-copy",
+          ".olfactive-position",
+          ".image-caption",
+          ".offer-content > *"
+        ];
+
+        document.querySelectorAll(selectors.join(",")).forEach(function(el) {
+          el.classList.add("reveal-on-scroll");
+        });
+
+        document.querySelectorAll(".notes, .usage-grid, .scene-media").forEach(function(el) {
+          el.dataset.revealContainer = "true";
+        });
+      }
+
+      function setupObservers() {
+        if (!("IntersectionObserver" in window)) {
+          document.querySelectorAll(".reveal-on-scroll, .scene-media, .notes, .usage-grid").forEach(function(el) {
+            el.classList.add("is-visible");
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+        }, {
+          threshold: 0.14,
+          rootMargin: "0px 0px -10% 0px"
+        });
+
+        document.querySelectorAll(".reveal-on-scroll, .scene-media, .notes, .usage-grid").forEach(function(el) {
+          observer.observe(el);
+        });
+      }
+
+      function updateParallaxAndProgress() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const doc = document.documentElement;
+        const scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, scrollY / scrollable));
+
+        if (progressBar) {
+          progressBar.style.width = (progress * 100).toFixed(2) + "%";
+        }
+
+        if (reduceMotion) return;
+
+        parallaxNodes.forEach(function(node) {
+          const speed = Number(node.getAttribute("data-parallax")) || 0.1;
+          const rect = node.getBoundingClientRect();
+          const center = rect.top + (rect.height / 2);
+          const distance = center - (window.innerHeight / 2);
+          const offset = Math.max(-70, Math.min(70, distance * speed * -0.10));
+          node.style.setProperty("--parallax-y", offset.toFixed(2) + "px");
+        });
+      }
+
+      let parallaxTick = false;
+      function requestVisualUpdate() {
+        if (parallaxTick) return;
+        parallaxTick = true;
+        requestAnimationFrame(function() {
+          updateParallaxAndProgress();
+          parallaxTick = false;
+        });
+      }
+
+      function revealHero() {
+        window.setTimeout(function() {
+          if (heroScene) heroScene.classList.add("is-ready");
+          requestVisualUpdate();
+        }, reduceMotion ? 0 : 180);
+      }
+
+      prepareRevealElements();
+      setupObservers();
+      revealHero();
+
+      window.addEventListener("scroll", requestVisualUpdate, { passive: true });
+      window.addEventListener("resize", requestVisualUpdate, { passive: true });
+
     /*
       ======================================================
       CONFIGURAÇÃO
@@ -1631,8 +2033,8 @@
     // ANIMAÇÃO DA CORTINA
     // ------------------------------------------------------
 
-    const hero = document.querySelector(".hero");
-    const heroForm = hero.querySelector("[data-lead-form]");
+    const hero = heroScene || document.querySelector(".hero");
+    const heroForm = hero ? hero.querySelector("[data-lead-form]") : null;
 
 
     /*
